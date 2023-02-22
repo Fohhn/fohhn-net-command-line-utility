@@ -32,6 +32,7 @@ DESCRIPTION
        -20.5dB write -205.
 
 OPTIONS
+
        -t     serial device
 
        -n     udp node
