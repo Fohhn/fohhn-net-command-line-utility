@@ -1,7 +1,7 @@
 /*
  * Copyright 2023 Fohhn
  *
- * licensed under the MIT License, see LICENSE.TXT for more information
+ * licensed under the MIT License, see LICENSE for more information
  */
 
 #ifndef __CMD_H
