@@ -125,7 +125,7 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  if (device_id < 1 || device_id > 100)
+  if (device_id < 1 || device_id > 254)
   {
     printf("invalid device id\n");
     return 1;
