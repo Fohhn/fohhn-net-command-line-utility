@@ -18,6 +18,7 @@ unsigned char reply_buf[REPLY_BUF_LEN];
 
 int reply_id;
 int reply_pos;
+bool cb_received;
 
 #define END_BYTE 0xF0
 #define DECODE_BYTE 0xFF
@@ -26,30 +27,37 @@ void decode_begin(int id)
 {
   reply_id = id;
   reply_pos = 0;
+  cb_received = false;
 }
 
 int decode_rx_data(unsigned char *raw, int len)
 {
   int i = 0;
-  while (i < len)
+  for (int i = 0; i < len; i++)
   {
     if (reply_pos < REPLY_BUF_LEN)
     {
-      if (rx_buf[i] == DECODE_BYTE)
+      if (cb_received)
       {
-        i++;
+        cb_received = false;
         if (rx_buf[i] == 0x00)
         {
           reply_buf[reply_pos] = 0xF0;
+          reply_pos++;
         }
         else if (rx_buf[i] == 0x01)
         {
           reply_buf[reply_pos] = 0xFF;
+          reply_pos++;
         }
         else
         {
           return -1;
         }
+      }
+      else if (rx_buf[i] == DECODE_BYTE)
+      {
+        cb_received = true;
       }
       else if (rx_buf[i] == END_BYTE)
       {
@@ -64,10 +72,9 @@ int decode_rx_data(unsigned char *raw, int len)
       else
       {
         reply_buf[reply_pos] = rx_buf[i];
+        reply_pos++;
       }
-      reply_pos++;
     }
-    i++;
   }
   return -1;
 }
