@@ -14,16 +14,39 @@
 
 #include "serial.h"
 
-int init_serial_port(int *fd_ptr, char *tty)
+
+int init_serial_port(int *fd_ptr, char *tty, int baud)
 {
   int fd;
   struct termios options;
+  speed_t speed = B19200;
   memset(&options, 0, sizeof options);
+
+  switch(baud)
+  {
+    case 9600:
+      speed = B9600;
+      break;
+    case 19200:
+      speed = B19200;
+      break;
+    case 38400:
+      speed = B38400;
+      break;
+    case 57600:
+      speed = B57600;
+      break;
+    case 115200:
+      speed = B115200;
+      break;
+    default:
+      return SERIAL_ERROR_BAUDRATE;
+  }
 
   fd = open(tty, O_RDWR | O_NOCTTY | O_NDELAY);
 
   if (fd == -1)
-    return 1;
+    return SERIAL_ERROR;
 
   fcntl(fd, F_SETFL, 0);
 
@@ -42,20 +65,20 @@ int init_serial_port(int *fd_ptr, char *tty)
   options.c_cc[VTIME] = 5;
   options.c_cc[VMIN] = 0;
 
-  cfsetispeed(&options, B19200);
-  cfsetospeed(&options, B19200);
+  cfsetispeed(&options, speed);
+  cfsetospeed(&options, speed);
 
-  usleep(20000); /* rx buffer flush funktioniert nicht ohne delay? */
+  usleep(20000); /* rx buf flush requires delay? */
   tcsetattr(fd, TCSAFLUSH, &options);
 
   *fd_ptr = fd;
 
-  return 0;
+  return SERIAL_OK;
 }
 
 void write_to_serial_port(int *fd_ptr, unsigned char *buf, int len)
 {
-  tcflush(*fd_ptr, TCIOFLUSH); /* io flush vor jedem write? */
+  tcflush(*fd_ptr, TCIOFLUSH); /* io flush before write? */
   write(*fd_ptr, buf, len);
 }
 

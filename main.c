@@ -17,7 +17,7 @@
 #include "util.h"
 #include "udp.h"
 
-const char *version_info = "0.7";
+const char *version_info = "0.8";
 
 int tty_fd;
 char *udp_node;
@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 {
   int opt;
   unsigned char device_id = 0;
+  int baud = 19200;
   int fncmd_mode = FNCMD_MODE_INVALID;
   int fncmd = FNCMD_INVALID;
   bool set_mode = false;
@@ -58,11 +59,14 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  while ((opt = getopt(argc, argv, "t:n:d:sgc:p:vhV")) != -1)
+  while ((opt = getopt(argc, argv, "t:b:n:d:sgc:p:vhV")) != -1)
     switch (opt)
     {
     case 't':
       tty = optarg;
+      break;
+    case 'b':
+      baud = atoi(optarg);
       break;
     case 'n':
       udp_node = optarg;
@@ -145,9 +149,16 @@ int main(int argc, char **argv)
 
   if (tty != NULL)
   {
-    if (init_serial_port(&tty_fd, tty) != 0)
+    int result = init_serial_port(&tty_fd, tty, baud);
+
+    if (result == SERIAL_ERROR_BAUDRATE)
     {
-      printf("can't open %s\n", tty);
+      printf("no valid baud rate\n");
+      return 1;
+    }
+    else if (result != SERIAL_OK)
+    {
+      printf("error opening serial device\n");
       return 1;
     }
   }

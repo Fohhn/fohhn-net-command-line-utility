@@ -36,9 +36,13 @@ DESCRIPTION
        udp node. Alle values are written without delimiter,  for  example  for
        -20.5dB write -205.
 
+       Most devices use the default serial port speed of 19200 baud only.
+
 OPTIONS
 
        -t     serial device
+
+       -b     baud rate
 
        -n     udp node
 
