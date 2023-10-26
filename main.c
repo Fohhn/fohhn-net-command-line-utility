@@ -17,7 +17,7 @@
 #include "util.h"
 #include "udp.h"
 
-const char *version_info = "0.8";
+const char *version_info = "0.10";
 
 int tty_fd;
 char *udp_node;
@@ -707,7 +707,7 @@ int exec_cmd(int id, int len, int reply_len)
 
 int exec_cmd_v(int id, int len, int reply_len_min, int reply_len_max)
 {
-  int num, count, total;
+  int num, timeout, total;
   int sock_fd;
   struct sockaddr_in remote_addr;
   int rc, size, reply_len;
@@ -716,7 +716,7 @@ int exec_cmd_v(int id, int len, int reply_len_min, int reply_len_max)
   int retry;
   for (retry = 0; retry < 3; retry++)
   {
-    count = 0;
+    timeout = 0;
     total = 0;
 
     if (udp_node == NULL)
@@ -731,8 +731,8 @@ int exec_cmd_v(int id, int len, int reply_len_min, int reply_len_max)
     }
 
     decode_begin(id);
-    num = -1;
-    while (count < 10 && num != 0)
+    num = 0;
+    while (timeout < 2 && total < RX_BUF_LEN)
     {
       if (udp_node == NULL)
       {
@@ -746,14 +746,17 @@ int exec_cmd_v(int id, int len, int reply_len_min, int reply_len_max)
           num = -1;
       }
 
-      if (num >= 0)
+      if (num > 0)
       {
         total += num;
         reply_len = decode_rx_data(rx_buf, num);
         if (reply_len >= reply_len_min && reply_len <= reply_len_max)
           return 0;
       }
-      count++;
+      else
+      {
+        timeout++;
+      }
     }
   }
   if (total > 0)
