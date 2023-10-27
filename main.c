@@ -18,7 +18,7 @@
 #include "util.h"
 #include "udp.h"
 
-const char *version_info = "0.10";
+const char *version_info = "1.0";
 
 int tty_fd;
 char *udp_node;
