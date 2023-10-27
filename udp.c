@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <sys/time.h>
+#include <stdint.h>
 
 #include "udp.h"
 
@@ -48,7 +49,7 @@ int create_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, char *node)
   return 0;
 }
 
-void write_to_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, unsigned char *buf, int len)
+void write_to_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, uint8_t *buf, int len)
 {
   sendto(*sock_fd, buf, len, 0, (struct sockaddr *)remote_addr, size);
 }

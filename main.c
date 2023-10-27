@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "main.h"
 #include "options.h"
@@ -25,7 +26,7 @@ char *udp_node;
 int main(int argc, char **argv)
 {
   int opt;
-  unsigned char device_id = 0;
+  uint8_t device_id = 0;
   int baud = 19200;
   int fncmd_mode = FNCMD_MODE_INVALID;
   int fncmd = FNCMD_INVALID;
@@ -442,7 +443,7 @@ int main(int argc, char **argv)
         len = cmd_get_vol(device_id, param_chan);
         if (exec_cmd(device_id, len, 3) == 0)
         {
-          signed short gain;
+          int16_t gain;
           bool on, inv;
           get_gain(&gain, &on, &inv);
           printf("%d,%d,%d\n", gain, on, inv);
@@ -480,7 +481,7 @@ int main(int argc, char **argv)
         len = cmd_get_route(device_id, param_chan, param_in);
         if (exec_cmd(device_id, len, 3) == 0)
         {
-          signed short gain;
+          int16_t gain;
           bool on, inv;
           get_gain(&gain, &on, &inv);
           printf("%d,%d,%d\n", gain, on, inv);
@@ -508,8 +509,8 @@ int main(int argc, char **argv)
       len = cmd_get_info(device_id);
       if (exec_cmd(device_id, len, 5) == 0)
       {
-        unsigned short device_class;
-        unsigned char version[3];
+        uint16_t device_class;
+        uint8_t version[3];
         get_info(&device_class, version);
         printf("%#06x,%d.%d.%d\n", device_class, version[0], version[1], version[2]);
       }
@@ -527,7 +528,7 @@ int main(int argc, char **argv)
       len = cmd_get_controls(device_id);
       if (exec_cmd_v(device_id, len, 4, 5) == 0)
       {
-        unsigned char stat;
+        uint8_t stat;
         get_stat(&stat);
         for (int i = 0; i < 8; i++)
         {
@@ -554,7 +555,7 @@ int main(int argc, char **argv)
         len = cmd_get_eq(device_id, param_chan, param_nr);
         if (exec_cmd(device_id, len, 7) == 0)
         {
-          signed short freq, q, gain;
+          int16_t freq, q, gain;
           bool on;
           get_eq(&freq, &q, &gain, &on);
           printf("%d,%d,%d,%d\n", freq, q, gain, on);
@@ -572,7 +573,7 @@ int main(int argc, char **argv)
         len = cmd_get_xover(device_id, param_chan, param_nr);
         if (exec_cmd(device_id, len, 4) == 0)
         {
-          signed short freq;
+          int16_t freq;
           bool on;
           get_xover(&freq, &on);
           printf("%d,%d\n", freq, on);
@@ -590,7 +591,7 @@ int main(int argc, char **argv)
         len = cmd_get_delay(device_id, param_chan);
         if (exec_cmd(device_id, len, 3) == 0)
         {
-          unsigned short time;
+          uint16_t time;
           bool on;
           get_time(&time, &on);
           printf("%d,%d\n", time, on);
@@ -608,7 +609,7 @@ int main(int argc, char **argv)
         len = cmd_get_gate(device_id, param_chan);
         if (exec_cmd(device_id, len, 3) == 0)
         {
-          signed short thrs;
+          int16_t thrs;
           bool on;
           get_gate(&thrs, &on);
           printf("%d,%d\n", thrs, on);
@@ -626,7 +627,7 @@ int main(int argc, char **argv)
         len = cmd_get_gate_time(device_id, param_chan);
         if (exec_cmd(device_id, len, 4) == 0)
         {
-          unsigned short time;
+          uint16_t time;
           get_gate_time(&time);
           printf("%d\n", time);
         }
@@ -643,7 +644,7 @@ int main(int argc, char **argv)
         len = cmd_get_dynamic(device_id, param_chan);
         if (exec_cmd(device_id, len, 7) == 0)
         {
-          signed short lim, comp, ratio;
+          int16_t lim, comp, ratio;
           bool on;
           get_dynamic(&lim, &comp, &ratio, &on);
           printf("%d,%d,%d,%d\n", lim, comp, ratio, on);
@@ -661,7 +662,7 @@ int main(int argc, char **argv)
         len = cmd_get_dyn_gain(device_id, param_chan);
         if (exec_cmd(device_id, len, 3) == 0)
         {
-          signed short gain;
+          int16_t gain;
           get_dyn_gain(&gain);
           printf("%d\n", gain);
         }
@@ -678,7 +679,7 @@ int main(int argc, char **argv)
         len = cmd_get_dyn_time(device_id, param_chan);
         if (exec_cmd(device_id, len, 4) == 0)
         {
-          unsigned short att, rel;
+          uint16_t att, rel;
           get_dyn_time(&att, &rel);
           printf("%d,%d\n", att, rel);
         }

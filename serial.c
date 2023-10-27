@@ -11,6 +11,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdint.h>
 
 #include "serial.h"
 
@@ -76,13 +77,13 @@ int init_serial_port(int *fd_ptr, char *tty, int baud)
   return SERIAL_OK;
 }
 
-void write_to_serial_port(int *fd_ptr, unsigned char *buf, int len)
+void write_to_serial_port(int *fd_ptr, uint8_t *buf, int len)
 {
   tcflush(*fd_ptr, TCIOFLUSH); /* io flush before write? */
   write(*fd_ptr, buf, len);
 }
 
-int read_from_serial_port(int *fd_ptr, unsigned char *buf, int max_len)
+int read_from_serial_port(int *fd_ptr, uint8_t *buf, int max_len)
 {
   return read(*fd_ptr, buf, max_len);
 }

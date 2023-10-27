@@ -8,11 +8,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "cmd.h"
 #include "util.h"
 
-unsigned char cmd_buf[CMD_BUF_LEN];
+uint8_t cmd_buf[CMD_BUF_LEN];
 
 int cmd_buf_pos;
 
@@ -22,7 +23,7 @@ int cmd_begin()
   cmd_buf[0] = START_BYTE;
 }
 
-int cmd_add_byte(unsigned char d)
+int cmd_add_byte(uint8_t d)
 {
   if (d == START_BYTE)
   {

@@ -34,10 +34,10 @@
 #define CMD_SET_DELAY 0x86
 #define CMD_SET_SPEAKER 0x021
 
-extern unsigned char cmd_buf[CMD_BUF_LEN];
+extern uint8_t cmd_buf[CMD_BUF_LEN];
 
 int cmd_begin();
-int cmd_add_byte(unsigned char data);
+int cmd_add_byte(uint8_t data);
 
 int cmd_load_preset(int id, int nr);
 int cmd_set_speaker(int id, int channel, int nr);
