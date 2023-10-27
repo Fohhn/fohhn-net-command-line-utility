@@ -85,7 +85,7 @@ int get_preset(int *nr, char *name, int num)
   if (num > 17)
     return 1;
   *nr = reply_buf[0];
-  strncpy(name, reply_buf + 2, num);
+  strncpy(name, (char *)(reply_buf + 2), num);
   name[num - 1] = '\0';
   return 0;
 }
@@ -95,7 +95,7 @@ int get_speaker(int *nr, char *name, int num)
   if (num > 17)
     return 1;
   *nr = reply_buf[0];
-  strncpy(name, reply_buf + 2, num);
+  strncpy(name, (char *)(reply_buf + 2), num);
   name[num - 1] = '\0';
   return 0;
 }

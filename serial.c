@@ -15,7 +15,6 @@
 
 #include "serial.h"
 
-
 int init_serial_port(int *fd_ptr, char *tty, int baud)
 {
   int fd;
@@ -23,25 +22,25 @@ int init_serial_port(int *fd_ptr, char *tty, int baud)
   speed_t speed = B19200;
   memset(&options, 0, sizeof options);
 
-  switch(baud)
+  switch (baud)
   {
-    case 9600:
-      speed = B9600;
-      break;
-    case 19200:
-      speed = B19200;
-      break;
-    case 38400:
-      speed = B38400;
-      break;
-    case 57600:
-      speed = B57600;
-      break;
-    case 115200:
-      speed = B115200;
-      break;
-    default:
-      return SERIAL_ERROR_BAUDRATE;
+  case 9600:
+    speed = B9600;
+    break;
+  case 19200:
+    speed = B19200;
+    break;
+  case 38400:
+    speed = B38400;
+    break;
+  case 57600:
+    speed = B57600;
+    break;
+  case 115200:
+    speed = B115200;
+    break;
+  default:
+    return SERIAL_ERROR_BAUDRATE;
   }
 
   fd = open(tty, O_RDWR | O_NOCTTY | O_NDELAY);

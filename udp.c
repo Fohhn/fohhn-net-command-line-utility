@@ -54,7 +54,7 @@ void write_to_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, 
   sendto(*sock_fd, buf, len, 0, (struct sockaddr *)remote_addr, size);
 }
 
-int receive_from_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, uint8_t *buf, int len)
+int receive_from_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, socklen_t size, uint8_t *buf, int len)
 {
   return recvfrom(*sock_fd, buf, len, 0, (struct sockaddr *)remote_addr, &size);
 }

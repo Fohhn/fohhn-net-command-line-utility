@@ -36,8 +36,8 @@
 
 extern uint8_t cmd_buf[CMD_BUF_LEN];
 
-int cmd_begin();
-int cmd_add_byte(uint8_t data);
+void cmd_begin();
+void cmd_add_byte(uint8_t data);
 
 int cmd_load_preset(int id, int nr);
 int cmd_set_speaker(int id, int channel, int nr);
