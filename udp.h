@@ -10,9 +10,10 @@
 #define UDP_PORT 2101
 
 #include <arpa/inet.h>
+#include <stdint.h>
 
 int create_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, char *node);
-void write_to_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, unsigned char *buf, int len);
-int receive_from_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, char *buf, int len);
+void write_to_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, int size, uint8_t *buf, int len);
+int receive_from_udp_node(int *sock_fd, struct sockaddr_in *remote_addr, socklen_t size, uint8_t *buf, int len);
 
 #endif /* __UDP_H */

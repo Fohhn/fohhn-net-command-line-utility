@@ -9,12 +9,13 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "decode.h"
 #include "util.h"
 
-unsigned char rx_buf[RX_BUF_LEN];
-unsigned char reply_buf[REPLY_BUF_LEN];
+uint8_t rx_buf[RX_BUF_LEN];
+uint8_t reply_buf[REPLY_BUF_LEN];
 
 int reply_id;
 int reply_pos;
@@ -30,7 +31,7 @@ void decode_begin(int id)
   cb_received = false;
 }
 
-int decode_rx_data(unsigned char *raw, int len)
+int decode_rx_data(uint8_t *raw, int len)
 {
   int i = 0;
   for (int i = 0; i < len; i++)
@@ -84,7 +85,7 @@ int get_preset(int *nr, char *name, int num)
   if (num > 17)
     return 1;
   *nr = reply_buf[0];
-  strncpy(name, reply_buf + 2, num);
+  strncpy(name, (char *)(reply_buf + 2), num);
   name[num - 1] = '\0';
   return 0;
 }
@@ -94,12 +95,12 @@ int get_speaker(int *nr, char *name, int num)
   if (num > 17)
     return 1;
   *nr = reply_buf[0];
-  strncpy(name, reply_buf + 2, num);
+  strncpy(name, (char *)(reply_buf + 2), num);
   name[num - 1] = '\0';
   return 0;
 }
 
-int get_gain(signed short *gain, bool *on, bool *inv)
+int get_gain(int16_t *gain, bool *on, bool *inv)
 {
   *gain = signed_word(reply_buf[0], reply_buf[1]);
   *on = BT(reply_buf[2], 0);
@@ -122,7 +123,7 @@ int get_standby(bool *on)
   return 0;
 }
 
-int get_info(unsigned short *device_class, unsigned char *version)
+int get_info(uint16_t *device_class, uint8_t *version)
 {
   *device_class = unsigned_word(reply_buf[0], reply_buf[1]);
   version[0] = reply_buf[2];
@@ -137,7 +138,7 @@ int get_temp(short *temp)
   return 0;
 }
 
-int get_stat(unsigned char *stat)
+int get_stat(uint8_t *stat)
 {
   *stat = reply_buf[0];
   return 0;
@@ -157,7 +158,7 @@ int get_light(bool *on, bool *sign)
   return 0;
 }
 
-int get_eq(unsigned short *freq, unsigned short *q, signed short *gain, bool *on)
+int get_eq(uint16_t *freq, uint16_t *q, int16_t *gain, bool *on)
 {
   *freq = unsigned_word(reply_buf[0], reply_buf[1]);
   *q = unsigned_word(reply_buf[2], reply_buf[3]);
@@ -166,34 +167,34 @@ int get_eq(unsigned short *freq, unsigned short *q, signed short *gain, bool *on
   return 0;
 }
 
-int get_xover(signed short *freq, bool *on)
+int get_xover(int16_t *freq, bool *on)
 {
   *freq = unsigned_word(reply_buf[0], reply_buf[1]);
   *on = BT(reply_buf[3], 0);
   return 0;
 }
 
-int get_time(unsigned short *time, bool *on)
+int get_time(uint16_t *time, bool *on)
 {
   *time = unsigned_word(reply_buf[0], reply_buf[1]);
   *on = BT(reply_buf[2], 0);
   return 0;
 }
 
-int get_gate(signed short *thrs, bool *on)
+int get_gate(int16_t *thrs, bool *on)
 {
   *thrs = signed_word(reply_buf[0], reply_buf[1]);
   *on = BT(reply_buf[2], 0);
   return 0;
 }
 
-int get_gate_time(unsigned short *time)
+int get_gate_time(uint16_t *time)
 {
   *time = unsigned_word(reply_buf[0], reply_buf[1]);
   return 0;
 }
 
-int get_dynamic(signed short *lim, signed short *comp, signed short *ratio, bool *on)
+int get_dynamic(int16_t *lim, int16_t *comp, int16_t *ratio, bool *on)
 {
   *lim = signed_word(reply_buf[0], reply_buf[1]);
   *comp = signed_word(reply_buf[2], reply_buf[3]);
@@ -202,13 +203,13 @@ int get_dynamic(signed short *lim, signed short *comp, signed short *ratio, bool
   return 0;
 }
 
-int get_dyn_gain(signed short *gain)
+int get_dyn_gain(int16_t *gain)
 {
   *gain = signed_word(reply_buf[0], reply_buf[1]);
   return 0;
 }
 
-int get_dyn_time(signed short *att, signed short *rel)
+int get_dyn_time(uint16_t *att, uint16_t *rel)
 {
   *att = unsigned_word(reply_buf[0], reply_buf[1]);
   *rel = unsigned_word(reply_buf[2], reply_buf[3]);
