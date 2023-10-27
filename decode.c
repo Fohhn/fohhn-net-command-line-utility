@@ -209,7 +209,7 @@ int get_dyn_gain(int16_t *gain)
   return 0;
 }
 
-int get_dyn_time(int16_t *att, int16_t *rel)
+int get_dyn_time(uint16_t *att, uint16_t *rel)
 {
   *att = unsigned_word(reply_buf[0], reply_buf[1]);
   *rel = unsigned_word(reply_buf[2], reply_buf[3]);

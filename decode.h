@@ -30,6 +30,6 @@ int get_gate(int16_t *thrs, bool *on);
 int get_gate_time(uint16_t *time);
 int get_dynamic(int16_t *lim, int16_t *comp, int16_t *ratio, bool *on);
 int get_dyn_gain(int16_t *gain);
-int get_dyn_time(int16_t *att, int16_t *rel);
+int get_dyn_time(uint16_t *att, uint16_t *rel);
 
 #endif /* __DECODE_H */

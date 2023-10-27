@@ -555,7 +555,8 @@ int main(int argc, char **argv)
         len = cmd_get_eq(device_id, param_chan, param_nr);
         if (exec_cmd(device_id, len, 7) == 0)
         {
-          int16_t freq, q, gain;
+          int16_t gain;
+          uint16_t freq, q;
           bool on;
           get_eq(&freq, &q, &gain, &on);
           printf("%d,%d,%d,%d\n", freq, q, gain, on);
