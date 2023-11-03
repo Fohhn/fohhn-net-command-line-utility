@@ -1,6 +1,6 @@
 # Fohhn-Net command line utility
 
-Simple Fohhn-Net command line utility for Linux.
+Simple Fohhn-Net command line utility for Linux and macOS.
 
 ## Table of contents
 - [Fohhn-Net command line utility](#fohhn-net-command-line-utility)
