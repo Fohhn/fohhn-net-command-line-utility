@@ -37,6 +37,7 @@ DESCRIPTION
        -20.5dB write -205.
 
        Most devices use the default serial port speed of 19200 baud only.
+       Devices released 2023 and later use 115200 baud over the usb port.
 
 OPTIONS
 
