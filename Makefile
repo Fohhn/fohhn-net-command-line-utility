@@ -1,6 +1,4 @@
 
-CC = gcc
-
 TARGET = fnet
 
 SOURCE = main.c options.c cmd.c serial.c util.c decode.c udp.c
