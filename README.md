@@ -13,7 +13,7 @@ Simple Fohhn-Net command line utility for Linux and macOS.
 Use 'make' to build the utility.
 
 ## Requirements
-Add user to group 'dialout' to access serial ports.
+Add user to group 'dialout' to access serial ports on linux.
 ```shell 
 usermod -a -G dialout username
 ```
