@@ -88,6 +88,7 @@ void usage(char *argv0)
   printf(" -c command\n");
   printf("    preset,vol,rvol,mute,route,standby,info,temp,status,light,eq,xover,delay,\n");
   printf("    gate,gatetime,dyn,dyngain,dyntime,speaker\n");
+  printf("    (Note: rvol and mute are deprecated, use vol instead)\n");
   printf(" -p comma-separted list of command parameters\n");
   printf("    nr,ch,in,gain,on,off,inv,sign,freq,q,time,thrs,lim,comp,ratio,att,rel\n");
   printf(" -v verbose output\n");
