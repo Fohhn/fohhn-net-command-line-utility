@@ -38,6 +38,9 @@ DESCRIPTION
 
        Most devices use the default serial port speed of 19200 baud only.
        Devices released 2023 and later use 115200 baud over the usb port.
+       Devices released 2023 and later have no support for the relative
+       volume command, that is used for the dedicated mute command.
+       Use the absolute volume command for volume and mute instead.
 
 OPTIONS
 
@@ -58,6 +61,7 @@ OPTIONS
               preset  vol  rvol  mute  route standby info temp status light eq
               xover delay gate gatetime dyn dyngain dyntime speaker
 
+              (Note: rvol and mute are deprecated, use vol instead)
 
        -p     comma-separted list of command parameters
 
@@ -89,15 +93,15 @@ EXAMPLES
 
               fnet -t /dev/ttyUSB0 -d 1 -sc vol -p ch=1,gain=-300,on
 
-       Increase output volume for +1.5dB on channel 1
+       Increase output volume for +1.5dB on channel 1 (deprecated)
 
               fnet -t /dev/ttyUSB0 -d 1 -sc rvol -p ch=1,gain=15
 
-       Mute output channel 1
+       Mute output channel 1  (deprecated)
 
               fnet -t /dev/ttyUSB0 -d 1 -sc mute -p ch=1,off
 
-       Unmute output channel 1
+       Unmute output channel 1 (deprecated)
 
               fnet -t /dev/ttyUSB0 -d 1 -sc mute -p ch=1,on
 
